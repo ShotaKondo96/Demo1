@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Delete</title>
+</head>
+<body>
+<h1>削除画面</h1>
+
+    <form action="#" th:action="@{/delete}" th:object="${actor}" method="post">
+    	<p>ID : [[${actor.id}]] </p><input type="hidden" th:field="*{id}" />
+        <p>氏 : [[${actor.last_name}]]</p>
+        <p>名 : [[${actor.first_name}]]</p>
+
+
+        <p>　<a href = '/actor'>戻る</a>
+        <input type="button" value="決定" onClick = "ConfirmDel();" />
+        </p>
+    </form>
+
+<script th:inline = "javascript">
+	function ConfirmDel(){
+		let form = document.getElementsByTagName('form')[0];
+
+
+		 let conText = "本当に削除しますか?";
+
+
+		if(window.confirm(conText)){
+			form.submit();
+			return;
+		}
+
+	}
+
+</script>
+</body>
+</html>
