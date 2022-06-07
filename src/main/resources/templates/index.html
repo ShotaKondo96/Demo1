@@ -1,133 +1,15 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Index</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-
-<input type="hidden" id="dataBase" th:value="${dataBase.Data}" />
-<input type="hidden" id="pageIndex" th:value="${dataBase.pageIndex}" />
-<input type="hidden" id="pageNum" th:value="${dataBase.pageNum}" />
-
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>ReactJS + Spring Data REST</title>
+    <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-<h1>閲覧画面</h1>
 
-    <p><input type="button" value="登録" onClick="location.href='/submit'"/>
-    <input type="button" value="編集" onClick="editClick()"/>
-    <input type="button" value="削除" onClick="deleteClick()"/>
+    <div id="react"></div>
 
-     </p>
-
-<script th:inline = "javascript">
-
-	var DB = document.getElementById("dataBase").value;
-	var DB_list = DB.split(",");
-
-	var pageIndex = Number(document.getElementById("pageIndex").value);
-	var pageNum= Number(document.getElementById("pageNum").value);
-
-	var lastIndex =  pageIndex*20 +  20
-	var back_index;
-	var next_index;
-	var show_index;
-
-	  //ページ戻るの表示
-	  document.write("<table><tr>");
-	  document.write("<td>");
-      if(pageIndex > 0){
-
-          back_index = pageIndex - 1;
-          document.write( "<a href = '/actor/"+back_index+"'class='example2'><</a>");
-          }else{document.write("  ");}
-      document.write("</td>");
-		document.write("<td></td>");
-	  //ページ番号リンクの表示
-      for (let j = 0; j < pageNum+1 ; j ++){
-    	  document.write("<td>");
-    	  show_index = j +1;
-    	  if(j == pageIndex){
-    		  document.write(show_index)
-
-    	  }else{
-    		  document.write( "<a href = '/actor/"+j+"'>"+show_index+"</a>");
-    	  }
-          document.write("</td>");
-  		  document.write("<td></td>");
-
-      }
-
-	  //ページ進むの表示
-      document.write("<td>");
-      if(pageIndex < pageNum){
-
-          next_index = pageIndex + 1;
-          document.write( "<a href = '/actor/"+next_index+"'>></a>");
-          }else{document.write("  ");}
-      document.write("</td>");
-
-      //データの表示
-	  document.write("</tr></table><table border='1'>");
-
-      if (pageIndex == pageNum) lastIndex =  DB_list.length/4;
-
-      document.write("<th></th>")
-	  for (let j = 0; j < 4; j++){
-    	  document.write("<th>"+DB_list[j]+"</th>");
-      	}
-      for (i =pageIndex*20+1; i < lastIndex; i++){
-    	  document.write("<tr>");
-    	  tmp_index = i*4;
-    	  document.write("<td><input type='radio' value='"+tmp_index+"' name='cActor'></td>");
-
-    	  for (let j = 0; j < 4; j++){
-    	  document.write("<td>"+DB_list[i*4+j]+"</td>");
-      	}
-    	  document.write("</tr>");
-      }
-	  document.write("</table>");
-
-       function editClick(){
-    	   let elements = document.getElementsByName('cActor');
-    	   let len = elements.length;
-    	   let ci = 0;
-
-    	   for (let i = 0; i < len; i++){
-    	       if (elements.item(i).checked){
-    	           ci = Number(elements.item(i).value);
-    	       }
-    	   }
-
-    	  //cosole.log(ci);
-    	  if (ci == 0 ){
-    		  alert("編集するデータ項目を選択してください。");
-    	  }
-
-    	  else{
-        	  window.location.href = '/edit/'+DB_list[ci]+','+DB_list[ci+1]+','+DB_list[ci+2];
-
-    	  }
-
-
-       }
-       function deleteClick(){
-    	   let elements = document.getElementsByName('cActor');
-    	   let len = elements.length;
-    	   let ci = 0;
-
-    	   for (let i = 0; i < len; i++){
-    	       if (elements.item(i).checked){
-    	           ci = Number(elements.item(i).value);
-    	       }
-    	   }
-    	   	  if (ci == 0 ){
-        		  alert("削除する項目を選択してください。");
-        	  }else{
-
-    	  			window.location.href = '/delete/'+DB_list[ci]+','+DB_list[ci+1]+','+DB_list[ci+2];
-        	  }
-       }
-</script>
+    <script src="built/bundle.js"></script>
 
 </body>
 </html>
